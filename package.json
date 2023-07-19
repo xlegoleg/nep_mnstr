@@ -2,9 +2,12 @@
   "name": "nep_mnstr",
   "version": "1.0.0",
   "description": "node, express, postgress app structure",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "test": "test"
+    "configure:dev": "chmod +x bin/configure-dev-db.sh && bin/configure-dev-db.sh",
+    "start": "node dist/index.js",
+    "start:dev": "nodemon src/index.ts",
+    "build": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -21,5 +24,18 @@
   "bugs": {
     "url": "https://github.com/xlegoleg/nep_mnstr/issues"
   },
-  "homepage": "https://github.com/xlegoleg/nep_mnstr#readme"
+  "homepage": "https://github.com/xlegoleg/nep_mnstr#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.4.1",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.1"
+  }
 }
