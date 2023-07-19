@@ -1,7 +1,9 @@
 import { App } from "./app";
-import { FortunesController } from "./controllers/fortunes.controller";
+import { configDotenv } from "dotenv";
 
-const app = new App([new FortunesController()]);
+configDotenv();
+
+const app = new App([]);
 
 app.listen();
 
