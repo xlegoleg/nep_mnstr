@@ -1,0 +1,25 @@
+{
+  "name": "nep_mnstr",
+  "version": "1.0.0",
+  "description": "node, express, postgress app structure",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xlegoleg/nep_mnstr.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "postgress",
+    "typescript"
+  ],
+  "author": "xlegoleg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xlegoleg/nep_mnstr/issues"
+  },
+  "homepage": "https://github.com/xlegoleg/nep_mnstr#readme"
+}
