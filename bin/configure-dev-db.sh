@@ -1,16 +1,19 @@
 #!/bin/bash
 
+# Pay attention dev variables is in .gitignore
+
+source ./bin/dev-variables.sh
+
 # Script just refresh local database and
 # populates tables with initial date for development purposes
 
-DB="monstersdb"
-SCRIPT_PATH=./mock/init-monsters.sql
+echo "Configuring $DB_NAME for development"
 
-echo "Configuring $DB for development"
+export PGPASSWORD=$DB_PASSWORD
 
-dropdb -U node_user $DB
-createdb -U node_user $DB
+dropdb -U node_user $DB_NAME
+createdb -U node_user $DB_NAME
 
-psql -U node_user $DB < $SCRIPT_PATH
+psql -U $DB_USER $DB_NAME < $DB_INIT_SCRIPT_PATH
 
-echo "$DB is configured"
+echo "$DB_NAME is configured"

@@ -1,5 +1,9 @@
+#Base
 .idea
 node_modules
 dist
-mock
 .env
+
+#Dev
+mock
+bin/dev-variables.sh
