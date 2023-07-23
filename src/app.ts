@@ -1,20 +1,30 @@
 import express from "express";
-import config from "./config";
 import bodyParser from "body-parser";
 import IController from "./types/eva/controller.interface";
+import { APP_CONFIG } from "./config";
+import { PGDB } from "./db";
 
 export class App {
     public app: express.Application;
-    private readonly port: Number;
-    private readonly host_url: String;
+    private readonly port: number;
+    private readonly host_url?: string;
 
     public constructor(controllers :IController[]) {
         this.app = express();
-        this.port = config.port;
-        this.host_url = config.host;
+        this.port = Number(APP_CONFIG.APP_PORT);
+        this.host_url = APP_CONFIG.APP_HOST_URL;
 
         this.initMiddleware();
         this.initControllers(controllers);
+        this.initDataBases();
+    }
+
+    private initDataBases(): void {
+        try {
+            PGDB.connect();
+        } catch (e) {
+            console.log('An error occurred while connecting PostgresSQL')
+        }
     }
 
     private initControllers(controllers: IController[]): void {
@@ -26,13 +36,21 @@ export class App {
     private initMiddleware(): void {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({
-            extended: true
+            extended: true,
         }));
     }
 
     public listen(): void {
-        this.app.listen(this.port, () => {
-            console.log(`⚡️[server]: Server is running at ${this.host_url}:${this.port}`);
-        });
+        try {
+            if (this.host_url && this.port) {
+                this.app.listen(this.port, this.host_url, () => {
+                    console.log(`⚡️[App]: Server is running at ${this.host_url}:${this.port}`);
+                });
+            } else {
+                console.log(`⚡️[App]: Cannot run server at ${this.host_url}:${this.port}`);
+            }
+        } catch (e) {
+            console.log(`⚡️[App]: An error occurred while running the server`, e);
+        }
     }
 }
