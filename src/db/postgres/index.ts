@@ -1,4 +1,4 @@
-import { Pool, ClientConfig, QueryResult } from 'pg'
+import { Pool, ClientConfig } from 'pg'
 import { APP_CONFIG } from "@config/index";
 
 
@@ -28,4 +28,4 @@ class PostgresDB {
     }
 }
 
-export const PGDB = new PostgresDB();
+export const pgDB: PostgresDB = new PostgresDB();

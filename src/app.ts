@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import IController from "./types/eva/controller.interface";
 import { APP_CONFIG } from "@config/index";
-import { PGDB } from "@db/postgres";
+import { pgDB } from "@db/postgres";
 import { defaultErrorHandler } from "./middleware/error-handler.middleware";
 
 export class App {
@@ -22,7 +22,7 @@ export class App {
 
     private initDataBases(): void {
         try {
-            PGDB.connect();
+            pgDB.connect();
         } catch (e) {
             console.log('An error occurred while connecting PostgresSQL')
         }

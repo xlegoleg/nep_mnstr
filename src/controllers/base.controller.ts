@@ -1,10 +1,10 @@
 import express, { Router } from "express";
 import IController from "../types/eva/controller.interface";
-import { PGDB } from "@db/postgres";
+import { pgDB } from "@db/postgres";
 
 export abstract class BaseController implements IController {
     private _router: Router = express.Router();
-    private _pg = PGDB
+    private _pg = pgDB;
     private readonly _path: string;
 
 
