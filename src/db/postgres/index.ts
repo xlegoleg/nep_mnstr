@@ -1,8 +1,9 @@
 import { Pool, ClientConfig, QueryResult } from 'pg'
-import { APP_CONFIG } from "../../config";
+import { APP_CONFIG } from "@config/index";
+
 
 class PostgresDB {
-    private _pool: Pool;
+    private readonly _pool: Pool;
 
     public constructor() {
         this._pool = new Pool({
@@ -14,17 +15,15 @@ class PostgresDB {
         } as ClientConfig);
     }
 
+    public get pool(): Pool {
+        return this._pool;
+    }
+
     public connect(): void {
         this._pool.connect().then(() => {
             console.log(`⚡️[PostgresDB]: Successfully connected to PostgreSQL`);
         }).catch((e) => {
             console.log(`⚡️[PostgresDB]: An error occurred while connecting to the PostgreSQL`, e);
-        })
-    }
-
-    public query(queryString: string, callback?: QueryResult<any>) {
-        this._pool.query(queryString, (err, res) => {
-            console.log(err, res);
         })
     }
 }

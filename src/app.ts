@@ -1,8 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import IController from "./types/eva/controller.interface";
-import { APP_CONFIG } from "./config";
-import { PGDB } from "./db";
+import { APP_CONFIG } from "@config/index";
+import { PGDB } from "@db/postgres";
+import { defaultErrorHandler } from "./middleware/error-handler.middleware";
 
 export class App {
     public app: express.Application;
@@ -34,6 +35,7 @@ export class App {
     }
 
     private initMiddleware(): void {
+        this.app.use(defaultErrorHandler);
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({
             extended: true,

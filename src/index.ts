@@ -1,10 +1,9 @@
+import 'module-alias/register';
 import { App } from "./app";
-import { PGDB } from "./db";
+import { MonstersController } from "@controllers/monsters.controller";
 
-const app = new App([]);
+const app = new App([new MonstersController()]);
 
 app.listen();
-
-PGDB.query('SELECT * FROM monsters')
 
 module.exports = app;
