@@ -8,16 +8,16 @@ export class MonstersController extends BaseController {
     }
 
     protected initRoutes() {
-        this._router.get(`${this.path()}`, this.getAll);
-        this._router.post(`${this.path()}`, this.createOne);
-        this._router.get(`${this.path()}/:id`, this.getOne)
-        this._router.put(`${this.path()}/:id`, this.updateOne)
-        this._router.delete(`${this.path()}/:id`, this.deleteOne)
+        this.router.get(`${this.path}`, this.getAll);
+        this.router.post(`${this.path}`, this.createOne);
+        this.router.get(`${this.path}/:id`, this.getOne)
+        this.router.put(`${this.path}/:id`, this.updateOne)
+        this.router.delete(`${this.path}/:id`, this.deleteOne)
     }
 
     public getAll = async (req: Request, resp: Response, next: NextFunction) => {
         try {
-            const res = await this._pg.pool.query(
+            const res = await this.pg.pool.query(
                 'SELECT * FROM monsters ORDER BY id ASC'
             )
             resp.json(res.rows);
@@ -28,7 +28,7 @@ export class MonstersController extends BaseController {
 
     public getOne = async (req: Request, resp: Response, next: NextFunction) => {
         try {
-            const res = await this._pg.pool.query(
+            const res = await this.pg.pool.query(
                 'SELECT * FROM monsters WHERE id = $1',
                 [req.params.id]
             )
@@ -41,11 +41,11 @@ export class MonstersController extends BaseController {
     public createOne = async (req: Request, resp: Response, next: NextFunction) => {
         try {
             const { name, personality } = req.body;
-            await this._pg.pool.query(
+            await this.pg.pool.query(
                 'INSERT INTO monsters(name, personality) VALUES($1, $2)',
                 [name, personality]
             )
-            resp.redirect(this.path());
+            resp.redirect(this.path);
         } catch (e) {
             next(e);
         }
@@ -55,11 +55,11 @@ export class MonstersController extends BaseController {
         try {
             const { id } = req.params;
             const { name, personality } = req.body;
-            await this._pg.pool.query(
+            await this.pg.pool.query(
                 'UPDATE monsters SET name=($1), personality=($2) WHERE id=($3)',
                 [name, personality, id],
             )
-            resp.redirect(this.path());
+            resp.redirect(this.path);
         } catch (e) {
             next(e);
         }
@@ -68,11 +68,11 @@ export class MonstersController extends BaseController {
     public deleteOne = async (req: Request, resp: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-            await this._pg.pool.query(
+            await this.pg.pool.query(
                 'DELETE FROM monsters WHERE id=($1)',
                 [id],
             )
-            resp.redirect(this.path());
+            resp.redirect(this.path);
         } catch (e) {
             next(e);
         }

@@ -30,7 +30,7 @@ export class App {
 
     private initControllers(controllers: IController[]): void {
         controllers.forEach((controller: IController) => {
-            this.app.use('/', controller.router());
+            this.app.use('/', controller.router);
         });
     }
 

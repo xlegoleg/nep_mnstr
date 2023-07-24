@@ -3,8 +3,8 @@ import IController from "../types/eva/controller.interface";
 import { PGDB } from "@db/postgres";
 
 export abstract class BaseController implements IController {
-    protected _router: Router = express.Router();
-    protected _pg = PGDB
+    private _router: Router = express.Router();
+    private _pg = PGDB
     private readonly _path: string;
 
 
@@ -12,11 +12,15 @@ export abstract class BaseController implements IController {
         this._path = path;
     }
 
-    public path(): string {
+    public get pg() {
+        return this._pg;
+    }
+
+    public get path(): string {
         return this._path;
     }
 
-    public router(): Router {
+    public get router(): Router {
         return this._router;
     }
 }
